@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <div class="contaner">
+        <div class="row">
+            <div class="col-xs-12">
+                <dl>
+                    <dt>
+                        <a href="{% url "triangle" %}">Triangle Area</a>
+                    </dt>
+                    <dd>
+                        A tool to determine the area of a triangle.
+                    </dd>
+                    <dt>
+                        <a href="{% url "pythagorean" %}">Pythagorean Calculation</a>
+                    </dt>
+                    <dd>
+                        A tool that determines the length of the third side of a right triangle from the other 2 side lengths
+                    </dd>
+                    <dt>
+                        <a href="{% url "time" %}">Hours to seconds</a>
+                    </dt>
+                    <dd>
+                        A tool that converts hours and minutes to seconds.
+                    </dd>
+                    <dt>
+                        <a href="{% url "repeat" %}">Recursive</a>
+                    </dt>
+                    <dd>
+                        A tool that repeats a string some number of times.
+                    </dd>
+                </dl>
+            </div>
+        </div>
 
+    </div>
+</body>
+</html>

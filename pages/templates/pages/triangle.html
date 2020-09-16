@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Area of a triangle</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <div id="container" style="margin:6%">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Triangle Area from base and height</h3>
+            </div>
+            <div class="col-xs-12">
+                <p>
+                    The area of a triangle can be determined from the base multiplied by the height as illustrated here. Enter the height and base below to get your area
+                    <img src="{% static 'images/baseheight.jpg' %}"/>
+                </p>
+                <form name="baseheight">
+                    <div class="form-group">
+                        <label for="base">
+                            Base:
+                        </label>
+                        <input class=form-control" id="base" name="base" type="number" />
+                    </div>
+                    <div class="form-group">
+                        <label for="height">
+                            Height:
+                        </label>
+                        <input class=form-control" id="height" name="height" type="number" />
+                    </div>
+                    <btn class="js-target-baseheightbutton btn btn-sm btn-primary">Calculate</btn>
+                </form>
+            </div>
+            <div class="col-xs-12">
+                <h4>
+                    Area is: <span class="js-target-baseheight text-success"></span>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Triangle Area from 3 sides</h3>
+            </div>
+            <div class="col-xs-12">
+                <p>
+                    The area of a triangle can be determined using Heron's Formula which calculates based on the perimeter relation to the sides
+                    <img src="{% static 'images/triangle-sss.svg' %}"/>
+                </p>
+                <form name="baseheight">
+                    <div class="form-group">
+                        <label for="sideA">
+                            Side a:
+                        </label>
+                        <input class=form-control" id="sideA" name="sideA" type="number" />
+                    </div>
+                    <div class="form-group">
+                        <label for="sideB">
+                            Side b:
+                        </label>
+                        <input class=form-control" id="sideB" name="sideB" type="number" />
+                    </div>
+                    <div class="form-group">
+                        <label for="sideC">
+                            Side c:
+                        </label>
+                        <input class=form-control" id="sideC" name="sideC" type="number" />
+                    </div>
+                    <btn class="js-target-threesidesbutton btn btn-sm btn-primary">Calculate</btn>
+                </form>
+            </div>
+            <div class="col-xs-12">
+                <h4>
+                    Area is: <span class="js-target-threesides text-success"></span>
+                </h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Triangle Area from 2 sides and angle</h3>
+            </div>
+            <div class="col-xs-12">
+                <p>
+                    The area of a triangle can be determined from 2 sides and the included angle. This is only coded for 2 sides and the angle between with the angle expressed in degrees.
+                    <img src="{% static 'images/triangle-sas.svg' %}"/>
+                </p>
+                <form name="baseheight">
+                    <div class="form-group">
+                        <label for="sideA_x">
+                            Side a:
+                        </label>
+                        <input class=form-control" id="sideA_x" name="sideA_x" type="number" />
+                    </div>
+                    <div class="form-group">
+                        <label for="sideB_x">
+                            Side b:
+                        </label>
+                        <input class=form-control" id="sideB_x" name="sideB_x" type="number" />
+                    </div>
+                    <div class="form-group">
+                        <label for="angleA">
+                            Angle A:
+                        </label>
+                        <input class=form-control" id="angleA" name="angleA" type="number" />
+                    </div>
+                    <btn class="js-target-twosidesbutton btn btn-sm btn-primary">Calculate</btn>
+                </form>
+            </div>
+            <div class="col-xs-12">
+                <h4>
+                    Area is: <span class="js-target-twosides text-success"></span>
+                </h4>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.js-target-baseheightbutton').click(function(e){
+                let data = {
+                    base: $('#base').val(),
+                    height: $('#height').val()
+                };
+
+                $.ajax({
+                    method:'post',
+                    data:JSON.stringify(data),
+                    url: "{% url 'calculate-triangle' %}"
+                }).then(function(result){
+                    $('.js-target-baseheight').text(result.area);
+                });
+            });//base height triangle calculation
+            $('.js-target-threesidesbutton').click(function(e){
+                let data = {
+                    sideA: $('#sideA').val(),
+                    sideB: $('#sideB').val(),
+                    sideC: $('#sideC').val(),
+                };
+
+                $.ajax({
+                    method:'post',
+                    data:JSON.stringify(data),
+                    url: "{% url 'calculate-triangle' %}"
+                }).then(function(result){
+                    $('.js-target-threesides').text(result.area);
+                });
+            }); // 3 sides
+            $('.js-target-twosidesbutton').click(function(e){
+                let data = {
+                    sideA_x: $('#sideA_x').val(),
+                    sideB_x: $('#sideB_x').val(),
+                    angleA: $('#angleA').val(),
+                };
+
+                $.ajax({
+                    method:'post',
+                    data:JSON.stringify(data),
+                    url: "{% url 'calculate-triangle' %}"
+                }).then(function(result){
+                    $('.js-target-twosides').text(result.area);
+                });
+            }); // 2 sides
+        });
+    </script>
+
+</body>
+</html>

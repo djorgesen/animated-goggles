@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Convert Time</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+    <div id="container" style="margin:6%">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Get the seconds hours and minutes</h3>
+            </div>
+            <div class="col-xs-12">
+                <p>
+                    Enter the number of hours and minutes and the result in seconds will be output
+                </p>
+                <form name="baseheight">
+                    <div class="form-group">
+                        <label for="hours">
+                            Hours:
+                        </label>
+                        <input class=form-control" id="hours" name="hours" type="number" />
+                    </div>
+                    <div class="form-group">
+                        <label for="minutes">
+                            Minutes:
+                        </label>
+                        <input class=form-control" id="minutes" name="minutes" type="number" />
+                    </div>
+                    <btn class="js-target-minutes-button btn btn-sm btn-primary">Calculate</btn>
+                </form>
+            </div>
+            <div class="col-xs-12">
+                <h4>
+                    Seconds is: <span class="js-target-minutes text-success"></span>
+                </h4>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.js-target-minutes-button').click(function(e){
+                let data = {
+                    hours: $('#hours').val(),
+                    minutes: $('#minutes').val()
+                };
+
+                $.ajax({
+                    method:'post',
+                    data:JSON.stringify(data),
+                    url: "{% url 'seconds-converter' %}"
+                }).then(function(result){
+                    $('.js-target-minutes').text(result.seconds + ' seconds');
+                });
+            });//base height triangle calculation
+        });
+    </script>
+
+</body>
+</html>
